@@ -1,0 +1,8 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+  <rect width='100' height='100' rx='12' fill='#1a0a0a'/>
+  <polygon points='50,8 92,80 8,80' fill='none' stroke='#ef3b24' stroke-width='5' stroke-linejoin='round'/>
+  <polygon points='50,22 80,72 20,72' fill='none' stroke='#ef3b24' stroke-width='3' stroke-linejoin='round'/>
+  <circle cx='50' cy='62' r='5' fill='#ef3b24'/>
+  <rect x='46' y='35' width='8' height='18' rx='3' fill='#ef3b24'/>
+  <text x='50' y='96' text-anchor='middle' font-family='monospace' font-size='7' fill='#ef3b24'>SURICATA</text>
+</svg>
