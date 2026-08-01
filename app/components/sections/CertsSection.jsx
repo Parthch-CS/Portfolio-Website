@@ -18,6 +18,17 @@ const CERTS = [
     image: "/certs/google-cybersecurity.png"
   },
   { 
+    id: "Applied Ethical Hacking", 
+    name: "Cyber Security and Applied Ethical Hacking", 
+    status: "COMPLETED", 
+    date: "Jul 2026", 
+    issuer: "Infosys Springboard",
+    credentialId: "verify.onwingspan.com",
+    credentialUrl: "https://verify.onwingspan.com",
+    pdf: "/certs/infosys-ethical-hacking.pdf",
+    image: "/certs/infosys-ethical-hacking.png"
+  },
+  { 
     id: "Cloud Fundamentals", 
     name: "Cloud Computing Fundamentals", 
     status: "COMPLETED", 
@@ -29,15 +40,15 @@ const CERTS = [
     image: "/certs/cloud-computing-fundamentals.png"
   },
   { 
-    id: "Journey to Cloud", 
-    name: "Journey to Cloud: Envisioning Your Solution", 
+    id: "Linux on IBM LinuxONE", 
+    name: "Linux on IBM LinuxONE Intermediate", 
     status: "COMPLETED", 
-    date: "Mar 2026", 
-    issuer: "IBM SkillsBuild",
-    credentialId: "44695c29-ac96-4914-a7d8-966c3110f8d8",
-    credentialUrl: "https://www.credly.com/badges/44695c29-ac96-4914-a7d8-966c3110f8d8",
-    pdf: "/certs/journey-to-cloud.pdf",
-    image: "/certs/journey-to-cloud.png"
+    date: "Oct 2025", 
+    issuer: "IBM",
+    credentialId: "f1372735-e93a-4612-8984-0f2412ec464d",
+    credentialUrl: "https://www.credly.com/badges/f1372735-e93a-4612-8984-0f2412ec464d",
+    pdf: "/certs/linux-on-ibm-linuxone.pdf",
+    image: "/certs/linux-on-ibm-linuxone.png"
   },
 ];
 

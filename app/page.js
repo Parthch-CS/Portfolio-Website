@@ -2,12 +2,12 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Shield, Server, Activity, Database, Key, Terminal, FileText, Send, Award, Skull, AlertOctagon, HelpCircle, X } from "lucide-react";
+import { FileText, Send, Terminal, X } from "lucide-react";
 import BootIntro from "./components/terminal/BootIntro";
 import ThreatTicker from "./components/ui/ThreatTicker";
 import DecryptText from "./components/ui/DecryptText";
-import GlassPanel from "./components/ui/GlassPanel";
 import SectionReveal from "./components/ui/SectionReveal";
+import VisitorTerminal from "./components/ui/VisitorTerminal";
 
 // Import all sections
 import AboutSection from "./components/sections/AboutSection";
@@ -88,83 +88,74 @@ export default function Home() {
       {/* Hide the dashboard content until boot finishes to avoid flashes */}
       <div className={`transition-opacity duration-1000 ${bootComplete ? "opacity-100" : "opacity-0"}`}>
         
-        {/* Threat Ticker */}
-        <div className="mb-10 -mx-4 sm:-mx-6 md:-mx-12 xl:-mx-24 overflow-hidden">
-          <ThreatTicker />
-        </div>
+        {/* First Page / Hero Wrapper */}
+        <div className="min-h-[calc(100vh-180px)] flex flex-col justify-between relative mb-24 md:mb-32">
+          {/* Threat Ticker */}
+          <div className="mb-6 -mx-4 sm:-mx-6 md:-mx-12 xl:-mx-24 overflow-hidden">
+            <ThreatTicker />
+          </div>
 
-        {/* Hero Section */}
-        <SectionReveal delay={0.2}>
-          <div className="mb-16 flex flex-col lg:flex-row items-center justify-between gap-8">
-            {/* Bio info */}
-            <div className="flex-1">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-heading font-bold mb-4 glitch-hover text-[#E6EDF3] uppercase tracking-tight">
-                Parth Chouriha
-              </h1>
-              
-              {/* Dynamic cycling typewriter role */}
-              <div className="text-xl sm:text-2xl text-[#8B99A8] font-mono h-8 flex items-center gap-2 mb-6">
-                <span className="text-[#00E5FF] font-bold">&gt;</span> 
-                <DecryptText 
-                  key={titleIndex}
-                  text={TITLES[titleIndex]} 
-                  speed={30} 
-                  delay={100} 
-                  className="text-[#00E5FF] font-semibold border-r-2 border-[#00E5FF] pr-1 animate-pulse" 
-                />
+          {/* Hero Section */}
+          <SectionReveal delay={0.2}>
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-8 py-6">
+              {/* Bio info */}
+              <div className="flex-1">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl font-heading font-bold mb-4 glitch-hover text-[#E6EDF3] uppercase tracking-tight">
+                  Parth Chouriha
+                </h1>
+                
+                {/* Dynamic cycling typewriter role */}
+                <div className="text-xl sm:text-2xl text-[#8B99A8] font-mono h-8 flex items-center gap-2 mb-6">
+                  <span className="text-[#00E5FF] font-bold">&gt;</span> 
+                  <DecryptText 
+                    key={titleIndex}
+                    text={TITLES[titleIndex]} 
+                    speed={30} 
+                    delay={100} 
+                    className="text-[#00E5FF] font-semibold border-r-2 border-[#00E5FF] pr-1 animate-pulse" 
+                  />
+                </div>
+                
+                <p className="max-w-2xl text-sm leading-relaxed text-[#8B99A8] border-l-2 border-[#1E2731] pl-4 mb-8">
+                  Final-year B.Tech Cybersecurity student at Manipal Institute of Technology, Bengaluru. Specializing in secure system design, AI-driven threat intelligence, network forensics, and web application security auditing. Welcome to my personal dashboard.
+                </p>
+
+                {/* Action Buttons */}
+                <div className="flex flex-wrap items-center gap-4">
+                  <a 
+                    href="/resume.pdf" 
+                    download 
+                    className="flex items-center gap-2 px-5 py-3 bg-[#00E5FF] hover:bg-[#00E5FF]/85 text-black font-bold font-heading uppercase text-xs tracking-wider transition-all rounded-sm shadow-[0_0_15px_rgba(0,229,255,0.2)] hover:shadow-[0_0_25px_rgba(0,229,255,0.4)]"
+                  >
+                    <FileText className="w-4 h-4" /> Download Resume
+                  </a>
+                  <a 
+                    href="#contact" 
+                    className="flex items-center gap-2 px-5 py-3 bg-transparent border border-[#1E2731] hover:border-[#00E5FF]/70 text-[#E6EDF3] hover:text-[#00E5FF] font-bold font-heading uppercase text-xs tracking-wider transition-all rounded-sm"
+                  >
+                    <Send className="w-4 h-4" /> Secure Channel
+                  </a>
+                </div>
               </div>
-              
-              <p className="max-w-2xl text-sm leading-relaxed text-[#8B99A8] border-l-2 border-[#1E2731] pl-4 mb-8">
-                Final-year B.Tech Cybersecurity student at Manipal Institute of Technology, Bengaluru. Specializing in secure system design, AI-driven threat intelligence, network forensics, and web application security auditing. Welcome to my personal dashboard.
-              </p>
 
-              {/* Action Buttons */}
-              <div className="flex flex-wrap items-center gap-4">
-                <a 
-                  href="/resume.pdf" 
-                  download 
-                  className="flex items-center gap-2 px-5 py-3 bg-[#00E5FF] hover:bg-[#00E5FF]/85 text-black font-bold font-heading uppercase text-xs tracking-wider transition-all rounded-sm shadow-[0_0_15px_rgba(0,229,255,0.2)] hover:shadow-[0_0_25px_rgba(0,229,255,0.4)]"
-                >
-                  <FileText className="w-4 h-4" /> Download Resume
-                </a>
-                <a 
-                  href="#contact" 
-                  className="flex items-center gap-2 px-5 py-3 bg-transparent border border-[#1E2731] hover:border-[#00E5FF]/70 text-[#E6EDF3] hover:text-[#00E5FF] font-bold font-heading uppercase text-xs tracking-wider transition-all rounded-sm"
-                >
-                  <Send className="w-4 h-4" /> Secure Channel
-                </a>
+              {/* Visitor Terminal */}
+              <div className="w-full lg:w-96 shrink-0">
+                <VisitorTerminal />
               </div>
             </div>
+          </SectionReveal>
 
-            {/* Quick Status & Stats Panel */}
-            <div className="w-full lg:w-96 shrink-0">
-              {/* Stats Counters */}
-              <GlassPanel className="p-5">
-                <h3 className="font-mono text-[10px] text-[#8B99A8] uppercase tracking-wider mb-4 border-b border-[#1E2731] pb-2">
-                  System Telemetry
-                </h3>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="p-3 bg-[#0B0F14] border border-[#1E2731] rounded-sm text-center">
-                    <div className="text-xl font-heading font-black text-[#00E5FF]">3+</div>
-                    <div className="text-[10px] font-mono text-[#8B99A8] uppercase mt-1">Credentials</div>
-                  </div>
-                  <div className="p-3 bg-[#0B0F14] border border-[#1E2731] rounded-sm text-center">
-                    <div className="text-xl font-heading font-black text-[#00E5FF]">6+</div>
-                    <div className="text-[10px] font-mono text-[#8B99A8] uppercase mt-1">Tools</div>
-                  </div>
-                  <div className="p-3 bg-[#0B0F14] border border-[#1E2731] rounded-sm text-center">
-                    <div className="text-xl font-heading font-black text-[#00E5FF]">3</div>
-                    <div className="text-[10px] font-mono text-[#8B99A8] uppercase mt-1">Core Projects</div>
-                  </div>
-                  <div className="p-3 bg-[#0B0F14] border border-[#1E2731] rounded-sm text-center">
-                    <div className="text-xl font-heading font-black text-[#00E5FF]">B.Tech</div>
-                    <div className="text-[10px] font-mono text-[#8B99A8] uppercase mt-1">Academics</div>
-                  </div>
-                </div>
-              </GlassPanel>
+          {/* Scroll Indicator */}
+          <div 
+            className="hidden sm:flex flex-col items-center gap-1.5 cursor-pointer opacity-45 hover:opacity-100 transition-opacity mt-4 pb-2" 
+            onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+          >
+            <span className="text-[9px] font-mono tracking-[0.2em] text-[#8B99A8] uppercase">Initialize Profile View</span>
+            <div className="w-5 h-8 border border-[#1E2731] rounded-full flex justify-center p-1">
+              <div className="w-1 h-1.5 bg-[#00E5FF] rounded-full animate-bounce" />
             </div>
           </div>
-        </SectionReveal>
+        </div>
 
         {/* Intrusion Simulation Modal overlay */}
         {simActive && (
@@ -225,88 +216,7 @@ export default function Home() {
           </div>
         )}
 
-        {/* Dashboard Grid */}
-        <SectionReveal delay={0.4}>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-32">
-            {/* Operator Profile Tile */}
-            <a href="#about" className="group">
-              <GlassPanel className="h-full flex flex-col group-hover:border-[#00E5FF]/50 transition-colors">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 bg-[#1E2731] rounded-sm group-hover:bg-[#00E5FF]/10 transition-colors">
-                    <UserIcon className="w-5 h-5 text-[#E6EDF3] group-hover:text-[#00E5FF]" />
-                  </div>
-                  <h2 className="font-heading uppercase tracking-widest text-sm">About Me</h2>
-                </div>
-                <p className="text-xs text-[#8B99A8] mt-auto">Background, academic profile, and technical competencies.</p>
-              </GlassPanel>
-            </a>
 
-            {/* Case Files Tile */}
-            <a href="#projects" className="group">
-              <GlassPanel className="h-full flex flex-col group-hover:border-[#00E5FF]/50 transition-colors">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 bg-[#1E2731] rounded-sm group-hover:bg-[#00E5FF]/10 transition-colors">
-                    <Database className="w-5 h-5 text-[#E6EDF3] group-hover:text-[#00E5FF]" />
-                  </div>
-                  <h2 className="font-heading uppercase tracking-widest text-sm">Projects</h2>
-                </div>
-                <p className="text-xs text-[#8B99A8] mt-auto">Security engineering projects, tools, and system breakdowns.</p>
-              </GlassPanel>
-            </a>
-
-            {/* CTF Logs Tile */}
-            <a href="#writeups" className="group">
-              <GlassPanel className="h-full flex flex-col group-hover:border-[#00E5FF]/50 transition-colors">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 bg-[#1E2731] rounded-sm group-hover:bg-[#00E5FF]/10 transition-colors">
-                    <Terminal className="w-5 h-5 text-[#E6EDF3] group-hover:text-[#00E5FF]" />
-                  </div>
-                  <h2 className="font-heading uppercase tracking-widest text-sm">Blog</h2>
-                </div>
-                <p className="text-xs text-[#8B99A8] mt-auto">Technical writeups, CTF solutions, and security research.</p>
-              </GlassPanel>
-            </a>
-
-            {/* Skills Matrix Tile */}
-            <a href="#skills" className="group">
-              <GlassPanel className="h-full flex flex-col group-hover:border-[#00E5FF]/50 transition-colors">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 bg-[#1E2731] rounded-sm group-hover:bg-[#00E5FF]/10 transition-colors">
-                    <Activity className="w-5 h-5 text-[#E6EDF3] group-hover:text-[#00E5FF]" />
-                  </div>
-                  <h2 className="font-heading uppercase tracking-widest text-sm">Skills</h2>
-                </div>
-                <p className="text-xs text-[#8B99A8] mt-auto">Technical proficiencies, security tools, and core frameworks.</p>
-              </GlassPanel>
-            </a>
-
-            {/* Certifications Tile */}
-            <a href="#certifications" className="group">
-              <GlassPanel className="h-full flex flex-col group-hover:border-[#00E5FF]/50 transition-colors">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 bg-[#1E2731] rounded-sm group-hover:bg-[#00E5FF]/10 transition-colors">
-                    <AwardIcon className="w-5 h-5 text-[#E6EDF3] group-hover:text-[#00E5FF]" />
-                  </div>
-                  <h2 className="font-heading uppercase tracking-widest text-sm">Certifications</h2>
-                </div>
-                <p className="text-xs text-[#8B99A8] mt-auto">Industry credentials, certifications, and active training.</p>
-              </GlassPanel>
-            </a>
-
-            {/* Secure Channel Tile */}
-            <a href="#contact" className="group">
-              <GlassPanel className="h-full flex flex-col group-hover:border-[#00E5FF]/50 transition-colors">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 bg-[#1E2731] rounded-sm group-hover:bg-[#00E5FF]/10 transition-colors">
-                    <Key className="w-5 h-5 text-[#E6EDF3] group-hover:text-[#00E5FF]" />
-                  </div>
-                  <h2 className="font-heading uppercase tracking-widest text-sm">Contact</h2>
-                </div>
-                <p className="text-xs text-[#8B99A8] mt-auto">Professional channels, direct email, and social profiles.</p>
-              </GlassPanel>
-            </a>
-          </div>
-        </SectionReveal>
 
         {/* Stacked Sections for SPA Scroll */}
         <div className="space-y-32 md:space-y-48 pb-20">
@@ -340,14 +250,4 @@ export default function Home() {
   );
 }
 
-// Temporary icon fallbacks since User and Award are used from Lucide above but imported differently
-function UserIcon(props) {
-  return (
-    <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-  );
-}
-function AwardIcon(props) {
-  return (
-    <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
-  );
-}
+

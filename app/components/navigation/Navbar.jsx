@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Search, Menu, X, ShieldAlert } from "lucide-react";
+import { Search, Menu, X } from "lucide-react";
 import CommandPalette from "./CommandPalette";
 
 export default function Navbar() {
@@ -65,7 +65,6 @@ export default function Navbar() {
             href="/"
             className="flex items-center gap-2 group text-[#E6EDF3] hover:text-[#00E5FF] transition-colors"
           >
-            <ShieldAlert className="w-6 h-6 text-[#00E5FF] group-hover:glitch-hover" />
             <span className="font-heading font-bold tracking-widest uppercase text-sm sm:text-base">
               PARTH CHOURIHA
             </span>

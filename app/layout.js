@@ -24,7 +24,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata = {
-  title: "Operator Profile | SOC Dashboard",
+  title: "Portfolio Website",
   description: "Live Operations Center Portfolio — Cybersecurity & Dev",
 };
 
