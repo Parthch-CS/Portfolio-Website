@@ -122,9 +122,12 @@ export default function Home() {
 
                 {/* Action Buttons */}
                 <div className="flex flex-wrap items-center gap-4">
+                  {/* TODO: Replace href with /resume.pdf once file is added to public/ */}
                   <a 
                     href="/resume.pdf" 
-                    download 
+                    download="Parth_Chouriha_Resume.pdf"
+                    target="_blank"
+                    rel="noreferrer"
                     className="flex items-center gap-2 px-5 py-3 bg-[#00E5FF] hover:bg-[#00E5FF]/85 text-black font-bold font-heading uppercase text-xs tracking-wider transition-all rounded-sm shadow-[0_0_15px_rgba(0,229,255,0.2)] hover:shadow-[0_0_25px_rgba(0,229,255,0.4)]"
                   >
                     <FileText className="w-4 h-4" /> Download Resume

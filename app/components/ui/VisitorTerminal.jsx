@@ -109,27 +109,59 @@ export default function VisitorTerminal() {
     return () => clearInterval(id);
   }, []);
 
-  /* ── IP fetch ── */
+  /* ── IP fetch with multi-API fallback chain ── */
   useEffect(() => {
     let active = true;
-    (async () => {
-      try {
-        const res = await fetch("https://ipwho.is/");
-        if (!res.ok) throw new Error();
+
+    const apis = [
+      // API 1: ipwho.is
+      async () => {
+        const res = await fetch("https://ipwho.is/", { signal: AbortSignal.timeout(5000) });
+        if (!res.ok) throw new Error("ipwho");
         const d = await res.json();
-        if (!d.success) throw new Error();
-        if (active) {
+        if (!d.success) throw new Error("ipwho-fail");
+        return { ip: d.ip, city: d.city, country: d.country, isp: d.connection?.isp ?? d.org };
+      },
+      // API 2: ipapi.co
+      async () => {
+        const res = await fetch("https://ipapi.co/json/", { signal: AbortSignal.timeout(5000) });
+        if (!res.ok) throw new Error("ipapi");
+        const d = await res.json();
+        if (d.error) throw new Error("ipapi-fail");
+        return { ip: d.ip, city: d.city, country: d.country_name, isp: d.org };
+      },
+      // API 3: ip-api.com (http — works from browser)
+      async () => {
+        const res = await fetch("http://ip-api.com/json/?fields=status,message,country,city,isp,query", { signal: AbortSignal.timeout(5000) });
+        if (!res.ok) throw new Error("ipapi2");
+        const d = await res.json();
+        if (d.status !== "success") throw new Error("ipapi2-fail");
+        return { ip: d.query, city: d.city, country: d.country, isp: d.isp };
+      },
+    ];
+
+    (async () => {
+      for (const api of apis) {
+        if (!active) return;
+        try {
+          const d = await api();
+          if (!active) return;
           cityRef.current = d.city ?? "unknown";
           setData({
-            ip:      d.ip ?? "—",
-            city:    d.city ?? "unknown",
+            ip:      d.ip      ?? "—",
+            city:    d.city    ?? "unknown",
             country: d.country ?? "—",
-            isp:     d.connection?.isp ?? d.org ?? "—",
+            isp:     d.isp     ?? "—",
           });
           setStatus("done");
+          return; // success — stop trying
+        } catch {
+          // try next API
         }
-      } catch { if (active) setStatus("failed"); }
+      }
+      if (active) setStatus("failed");
     })();
+
     return () => { active = false; };
   }, []);
 

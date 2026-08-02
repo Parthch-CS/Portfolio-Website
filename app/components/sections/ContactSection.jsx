@@ -31,14 +31,20 @@ export default function Contact() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setStatus("sending");
-    
+
+    // Build a mailto: link and open it — works without any backend
+    const subject = encodeURIComponent(`Portfolio Inquiry from ${formData.name}`);
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+    );
+    const mailtoUrl = `mailto:parthchouriha.cybersec@gmail.com?subject=${subject}&body=${body}`;
+    window.open(mailtoUrl, "_blank");
+
+    setStatus("sent");
     setTimeout(() => {
-      setStatus("sent");
-      setTimeout(() => {
-        setFormData({ name: "", email: "", message: "" });
-        setStatus("idle");
-      }, 3000);
-    }, 1200);
+      setFormData({ name: "", email: "", message: "" });
+      setStatus("idle");
+    }, 3000);
   };
 
   return (
@@ -198,8 +204,8 @@ export default function Contact() {
                 }`}
               >
                 {status === "idle" && <><Send className="w-4 h-4" /> Send Message</>}
-                {status === "sending" && <span>Sending Message...</span>}
-                {status === "sent" && <>MESSAGE SENT SUCCESSFULLY!</>}
+                {status === "sending" && <span>Opening Mail Client...</span>}
+                {status === "sent" && <>✓ EMAIL CLIENT OPENED!</>}
               </button>
             </form>
           </GlassPanel>
