@@ -109,65 +109,28 @@ export default function VisitorTerminal() {
     return () => clearInterval(id);
   }, []);
 
-  /* ── IP fetch — HTTPS-only fallback chain ── */
+  /* ── IP fetch via our own server-side route (/api/geoip) ── */
+  /* This bypasses CSP restrictions (same-origin) and CORS issues entirely */
   useEffect(() => {
     let active = true;
-
-    // Manual timeout wrapper (broader browser support than AbortSignal.timeout)
-    const fetchWithTimeout = (url, ms = 6000) => {
-      const ctrl = new AbortController();
-      const tid = setTimeout(() => ctrl.abort(), ms);
-      return fetch(url, { signal: ctrl.signal }).finally(() => clearTimeout(tid));
-    };
-
-    const apis = [
-      // API 1: ipwho.is  (HTTPS, no key needed)
-      async () => {
-        const res = await fetchWithTimeout("https://ipwho.is/");
-        if (!res.ok) throw new Error("ipwho");
-        const d = await res.json();
-        if (!d.success) throw new Error("ipwho-fail");
-        return { ip: d.ip, city: d.city ?? "—", country: d.country ?? "—", isp: d.connection?.isp ?? d.org ?? "—" };
-      },
-      // API 2: freeipapi.com  (HTTPS, no key, generous rate limit)
-      async () => {
-        const res = await fetchWithTimeout("https://freeipapi.com/api/json");
-        if (!res.ok) throw new Error("freeipapi");
-        const d = await res.json();
-        return { ip: d.ipAddress, city: d.cityName ?? "—", country: d.countryName ?? "—", isp: d.isp ?? "—" };
-      },
-      // API 3: ipapi.co  (HTTPS, 1 000 req/day free)
-      async () => {
-        const res = await fetchWithTimeout("https://ipapi.co/json/");
-        if (!res.ok) throw new Error("ipapi");
-        const d = await res.json();
-        if (d.error) throw new Error("ipapi-fail");
-        return { ip: d.ip, city: d.city ?? "—", country: d.country_name ?? "—", isp: d.org ?? "—" };
-      },
-    ];
-
     (async () => {
-      for (const api of apis) {
+      try {
+        const res = await fetch("/api/geoip");
+        if (!res.ok) throw new Error("api-fail");
+        const d = await res.json();
         if (!active) return;
-        try {
-          const d = await api();
-          if (!active) return;
-          cityRef.current = d.city;
-          setData({
-            ip:      d.ip,
-            city:    d.city,
-            country: d.country,
-            isp:     d.isp,
-          });
-          setStatus("done");
-          return;
-        } catch {
-          // silently try next API
-        }
+        cityRef.current = d.city ?? "unknown";
+        setData({
+          ip:      d.ip      ?? "—",
+          city:    d.city    ?? "—",
+          country: d.country ?? "—",
+          isp:     d.isp     ?? "—",
+        });
+        setStatus("done");
+      } catch {
+        if (active) setStatus("failed");
       }
-      if (active) setStatus("failed");
     })();
-
     return () => { active = false; };
   }, []);
 
